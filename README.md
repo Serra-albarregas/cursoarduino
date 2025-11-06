@@ -8,14 +8,14 @@ El objetivo del curso es que adquieras las bases necesarias para **comprender c�
 
 ## Contenido del curso
 
-### 1. [Introducción a Arduino](paginas/introduccion_arduino.md)
+### 1. [Introducción a Arduino](paginas/introduccion.md)
 Qué es Arduino, para qué sirve, los modelos disponibles y cómo esta tecnología puede contribuir a la sostenibilidad. Incluye una tabla comparativa de los principales modelos: Uno, Nano y Mega.
 
-### 2. [Componentes de Arduino](paginas/componentes_arduino.md)
+### 2. [Componentes de Arduino](paginas/componentes.md)
 Descripción detallada de las partes físicas que componen una placa Arduino, desde el microcontrolador hasta los pines, conectores, reguladores e indicadores LED.  
 Incluye un esquema visual y el pinout del modelo UNO R3.
 
-### 3. [Nuestro primer programa](paginas/primer_programa_arduino.md)
+### 3. [Nuestro primer programa](paginas/primer-programa.md)
 Primer contacto con el entorno de trabajo en Wokwi y con la estructura básica de un programa Arduino.  
 Se realiza el clásico **Blink**, aprendiendo a programar, simular y comprender conceptos como voltaje, conexión a tierra, resistencia y orientación del diodo.
 
