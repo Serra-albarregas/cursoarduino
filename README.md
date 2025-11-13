@@ -19,6 +19,12 @@ Incluye un esquema visual y el pinout del modelo UNO R3.
 Primer contacto con el entorno de trabajo en Wokwi y con la estructura básica de un programa Arduino.  
 Se realiza el clásico **Blink**, aprendiendo a programar, simular y comprender conceptos como voltaje, conexión a tierra, resistencia y orientación del diodo.
 
+### 4. [Comunicación serial](paginas/comunicacion.md)
+Utilización del puerto USB para comunicar el Arduino con el ordenador y viceversa.
+
+### 5. [Entradas y salidas digitales](paginas/IOdigital.md)
+Configuración de pines como entradas o salidas digitales.
+
 ---
 
 ## Qué necesitas
