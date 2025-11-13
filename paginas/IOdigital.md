@@ -96,3 +96,59 @@ Si la salida digital del Arduino nos permitía actuar en el mundo, las entradas 
 
 Por ejemplo, podemos realizar mediciones de temperatura, humedad, luminosidad, aceleración que nos servirán para tomar decisiones desde el código.
 
+Pero antes de ponernos a realizar mediciones en sensores, empezaremos detectando la pulsación de un botón.
+
+Lo primero será configurar un pin como entrada utilizando la función `pinMode()` y configurando el modo `INPUT`.
+
+``` c++
+const int pin = 8;
+ 
+void setup() {
+  pinMode(pin, INPUT);  //definir pin como entrada
+}
+```
+
+El primer montaje que construiremos para la lectura de un pin es el siguiente.
+
+![Conexión directa](/imagenes/esquemas/entrada1.png)
+
+Sin embargo existe un problema. Cuando el pulsador está activado la corriente pasa desde los 5V hasta el pin de entrada, sin embargo, ¿Qué ocurre en reposo? En este estado el pin de entrada no recibe corriente por lo que no puede realizar una medición, se encuentra en un estado indeterminado.
+
+Podemos mejorar la solución, conectando el pin de 5V a tierra y haciendo la medición en el medio, de la siguiente forma.
+
+![Cortocircuito](/imagenes/esquemas/entrada2.png)
+
+En esta situación, con circuito abierto, el pin de lectura está conectado a tierra, recibiendo 0V mientras que cuando el circuito se cierra recibe los 5V.
+
+El problema de esta solución es que con el circuito cerrado el pin de 5V pasa sin resitencia a tierra, lo que provoca un **cortocircuito**.
+
+El montaje correcto pasaría por incluir una resistencia para que los pines de 5 y 0 voltios no esten conectados directamente, de la siguiente manera.
+
+![Entrada correcta](/imagenes/esquemas/entrada3.png)
+
+En este caso el pin de lectura recibe `LOW` cuando el pulsador está abierto y recibe `HIGH` con el pulsador cerrado. Como hemos incluido una resistencia antes de la llegada a tierra, la intensidad que circulará por esa rama estará limitada, evitando el cortocircuito.
+
+Para recibir la información en código usaremos la función `digitalRead()` donde incluiremos como parámetro el pin a leer.
+
+En combinación con el montaje anterior podemos utilizar el siguiente código para leer cuando un pulsador esta activo y encender el LED del pin 13 en consecuencia.
+
+``` c++
+#include <Arduino.h>
+
+const int pinI = 8;
+const int pinO = 13;
+ 
+void setup() {
+  pinMode(pinI, INPUT);
+  pinMode(pinO, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(pinO, digitalRead(pinI));
+}
+
+```
+
+montaje
+
+![Entrada correcta](/imagenes/montajes/entrada.png)
