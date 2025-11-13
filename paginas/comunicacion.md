@@ -112,4 +112,76 @@ En el ejemplo el arduino se encuentra en espera activa. El controlador no tiene 
 > - El número se corresponde con el valor ASCII del carcter transmitido.
 > - Por lo que podemos comparar opción con el caracter '0' o con el número 48 y el resultado sería el mismo.
 
-### Ejemplo
+### Ejemplo: Recepción de cadenas de caracteres
+
+``` c++
+const int PIN = 13;
+const String pass = "1234";
+bool entrar = false;
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Inicio de sesión");
+  pinMode(PIN, OUTPUT);
+}
+
+void loop() {
+  if (Serial.available()>0){
+    String intento = Serial.readString();
+    intento.trim();
+    Serial.println("Intentando acceder con: [" + intento + "]");
+    delay(500);
+    if (intento == pass) {
+      Serial.println("Contraseña correcta");
+      entrar = true;
+    } else {
+      Serial.println("Contraseña incorrecta");
+    }
+  }
+
+  if (entrar) {
+    Serial.println("BIENVENID@");
+    digitalWrite(PIN, HIGH);
+  }
+
+  delay(1000);
+}
+```
+
+El código muestra un inicio de sesión con una contraseña. En cada iteración del loop se comprueba si se debe leer algún intento de acceso. Cuando el usuario escribe su contraseña, se valora si esta es igual a una ya escrita en el código. Si son iguales pondrá un booleano a true que mostrará continuamente el mensaje de bienvenida.
+
+> [!NOTE]
+> Al recibir un String con `Serial.readString()`, se lee también el salto de linea incluido generado al pulsar el intro para enviar el mensaje. Para evitar que se tenga en cuenta se le aplica la función `trim()`, que borra espacios e intros al inicio y al final de la cadena.
+
+### Ejemplo: Recepción de valores numéricos
+
+``` c++
+const int PIN = 13;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(PIN, OUTPUT);
+}
+
+void loop() {
+  if (Serial.available()>0){
+    int numero = Serial.parseInt();
+    Serial.println("Escribiendo: " + String(numero));
+    for (int i = 0; i<numero; i++) {
+      digitalWrite(PIN, HIGH);
+      delay(200);
+      digitalWrite(PIN, LOW);
+      delay(200);
+    }
+  }
+}
+```
+
+En este caso, el programa recibirá datos numéricos por UART. Luego hará blink un número de veces igual al número recibido.
+
+Para ello se utiliza la función `parseInt()`, que lee la cadena de texto recibida y devuelve el primer número encontrado, dejando el resto de la cadena en el buffer.
+
+Por ejemplo, si se recibe la cadena: "Tengo 1 cosa que decirte, imagina que tienes 2 vacas":
+- Inicialmente se leera "Tengo 1", se descartará "Tengo " y se devolverá el 1, dejando el resto de la frase en el buffer.
+- Al volver a ejecutarse el loop, se extraerá el resto del texto del buffer. Se leerá " cosa que decirte, imagina que tienes 2", descartantdo todo el texto y devolviendo un 2.
+- Finalmente, en la siguiente vuelta del loop se leerá el texto restante: " vacas", donde no hay un número. La función `parseInt()` en este caso devolverá un 0.
