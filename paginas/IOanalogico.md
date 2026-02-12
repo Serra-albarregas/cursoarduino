@@ -130,7 +130,7 @@ void loop() {
 }
 ```
 
-> ![NOTE]
+> [!NOTE]
 > Aunque en el programa estamos realizando una verificación del valor leído para que se ajuste al rango 0-255 la función `analogWrite` ya hace esa comprobación por lo que no sería necesario. En nuestro caso solo lo incluimos para mostrar el valor en la terminal.
 
 ## Combinando entradas y salidas analógicas
@@ -177,4 +177,36 @@ void loop() {
 ```
 
 ### Control del color de un LED RGB
+
+En este ejemplo, utilizaremos tre spotenciómetros para controlar la intensidad de un LED RGB y, por tanto, su color.
+
+Un LED RGB está formado por tres LEDS, uno rojo, otro verde y otro azul. Tiene cuatro patillas, una para cada uno de los colores y una cuarta común para la conexión a tierra
+
+> [!NOTE]
+> La patilla común puede configurarse como ánodo, que se conecta al pin de 5V o como cátodo, que se conecta a tierra, será la forma que usaremos.
+
+El montaje que haremos combinará tres potenciómetros para cambiar la intensidad de cada uno de los LED internos del LED RGB.
+
+![PWM](/imagenes/montajes/IOanalogica/ledRGB.png)
+
+Para el control utilizaremos un total de 6 pines, tres de entrada analógica para la lectura de los potenciómetros y otros 3 para la salida PWM en cada patilla del led. Para hacer más cómodo el manejo de los pines los hemos incluido en una matriz donde la primera fila representa los pines de entrada y la segunda los de salida.
+
+``` c++
+const int pines[2][3] = {{14, 15, 16},
+                         {11, 10,  9}};
+
+void setup() {
+  for (int i=0; i<3; i++){
+    pinMode(pines[0][i], INPUT);
+    pinMode(pines[1][i], OUTPUT);
+  }
+
+}
+
+void loop() {
+  for (int i=0; i<3; i++){
+    analogWrite(pines[1][i], map(analogRead(pines[0][i]), 0, 1023, 0, 255));
+  }
+}
+```
 
