@@ -25,6 +25,9 @@ Utilización del puerto USB para comunicar el Arduino con el ordenador y vicever
 ### 5. [Entradas y salidas digitales](paginas/IOdigital.md)
 Configuración de pines como entradas o salidas digitales.
 
+### 6. [Entradas y salidas analógicas](paginas/IOanalogico.md)
+Configuración de pines como entradas o salidas analógicas.
+
 ---
 
 ## Qué necesitas
